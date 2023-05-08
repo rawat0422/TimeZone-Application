@@ -5,8 +5,9 @@ import ClockActions from "../shared/clock-action";
 
 const LocalClock = ({ clock, updateLocalClock }) => {
 
-  const {date, offset, timezone} = useClock(clock.timezone, clock.offset)
-  console.log(date,offset,timezone)
+  const {date, offset, timezone,dateUtc} = useClock(clock.timezone, clock.offset)
+  
+  
 
 
   useEffect(() => {
@@ -20,8 +21,8 @@ const LocalClock = ({ clock, updateLocalClock }) => {
 
   return <div>
     
-    {date && (<ClockDisplay date={date} offset={offset} timezone={clock.timezone} title={clock.title} />)}
-    <ClockActions clock={clock} updateLocalClock={updateLocalClock}/>
+    {date && (<ClockDisplay date={date} offset={offset} timezone={timezone} title={clock.title} />)}
+    <ClockActions clock={clock} updateLocalClock={updateLocalClock} local={true}/>
 
   </div>;
 };

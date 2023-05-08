@@ -10,7 +10,7 @@ const TIMEZONE_OFFSET = {
   MST: -6 * 60,
 };
 
-const useClock = (timezone, offset) => {
+const useClock = (timezone, offset=0) => {
   const [localDate, setLocalDate] = useState(null);
   const [localTimeZone, setLocalTimeZone] = useState(null)
   const [localOffset, setLocalOffset] = useState(0)
@@ -19,35 +19,46 @@ const useClock = (timezone, offset) => {
   useEffect(() => {
     let d = new Date();
     const lo = d.getTimezoneOffset();
-    d = addMinutes(d, localOffset);
-    setUtc(d);
+   
+    d = addMinutes(d, lo);
+    
+    
     setLocalOffset(lo)
+   setUtc(d)
+   
+    
   }, []);
 
 
 
+ 
 
 
   useEffect(() => {
     if (utc !== null) {
       if (timezone) {
         offset = TIMEZONE_OFFSET[timezone] ?? offset
-        const newUtc = addMinutes(utc, offset)
-        setLocalDate(newUtc)
+        const timezoneTime = addMinutes(utc, offset)
+        
+        setLocalDate(timezoneTime)
+      
       } else {
-        const newUtc = addMinutes(utc, -localOffset)
-        const dateStrArr = newUtc.toUTCString().split(' ')
-        setLocalDate(newUtc)
+        const mashinTime = addMinutes(utc, localOffset)
+        const dateStrArr = mashinTime.toUTCString().split(' ')
+        setLocalDate(mashinTime)
         setLocalTimeZone(dateStrArr.pop())
+        
+        
       }
     }
   }, [utc, timezone, offset])
 
   return {
+    
     date: localDate,
     dateUtc: utc,
     timezone: timezone || localTimeZone,
-    offset: offset || localOffset
+    offset: offset || -localOffset
   }
 };
 
