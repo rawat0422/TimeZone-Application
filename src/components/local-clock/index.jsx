@@ -3,9 +3,9 @@ import useClock from "../../hooks/useClock";
 import ClockDisplay from "../shared/clock-display";
 import ClockActions from "../shared/clock-action";
 
-const LocalClock = ({ clock, updateLocalClock }) => {
+const LocalClock = ({ clock, updateLocalClock,creatClock }) => {
 
-  const {date, offset, timezone,dateUtc} = useClock(clock.timezone, clock.offset)
+  const {date, offset, timezone} = useClock(clock.timezone, clock.offset)
   
   
 
@@ -22,7 +22,7 @@ const LocalClock = ({ clock, updateLocalClock }) => {
   return <div>
     
     {date && (<ClockDisplay date={date} offset={offset} timezone={timezone} title={clock.title} />)}
-    <ClockActions clock={clock} updateLocalClock={updateLocalClock} local={true}/>
+    <ClockActions creatClock={creatClock} clock={clock} updateClock={updateLocalClock} local={true}/>
 
   </div>;
 };

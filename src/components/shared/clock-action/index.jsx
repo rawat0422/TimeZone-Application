@@ -3,11 +3,13 @@ import ClockForm from '../clock-form/clockForm'
 
 
 
-const ClockActions = ({ local = false, clock, updateLocalClock }) => {
+const ClockActions = ({ local = false, clock, updateClock,creatClock,deleteClock }) => {
     const [isEdit, setIsEdit] = useState(false)
     const [isCreate, setIsCreate] = useState(false)
     const handleClock = (value) => {
-        console.log(value)
+        
+        creatClock(value)
+       
 
     }
     return (
@@ -16,11 +18,11 @@ const ClockActions = ({ local = false, clock, updateLocalClock }) => {
             {local ? (
                 <button onClick={() => setIsCreate(!isCreate)}>Create</button>
             ) : (
-                <button>Delete</button>
+                <button onClick={()=>deleteClock(clock.id)}>Delete</button>
             )}
             {isEdit && <>
                 <h3>Edit Clock</h3>
-                <ClockForm handleClock={updateLocalClock}  edit={true} title={!local} value={clock}/>
+                <ClockForm handleClock={updateClock}  edit={true} title={!local} value={clock}/>
             </>}
 
             {isCreate && (
